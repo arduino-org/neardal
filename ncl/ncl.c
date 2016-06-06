@@ -168,11 +168,16 @@ NCLError ncl_exec(char *cmd)
 	GError *gerr = NULL;
 	ncl_cmd_func func = NULL;
 	char **argv = NULL;
+	char *cmdd = "help";
 	int argc;
 
-	if (!g_shell_parse_argv(g_strstrip(cmd), &argc, &argv, &gerr))
+	if(!(strcmp(cmd, cmdd))) {
+		argc = 1;
+		argv = &cmdd;
+	} else {
+		if (!g_shell_parse_argv(g_strstrip(cmd), &argc, &argv, &gerr))
 		goto exit;
-
+	}
 	if (!(func = ncl_prv_find_func(argv[0]))) {
 		NCL_CMD_PRINTERR("'%s': Not NCL command, trying shell\n", cmd);
 		g_spawn_command_line_async(cmd, &gerr);
@@ -189,7 +194,8 @@ exit:
 			NCL_CMD_PRINTERR("%s\n", gerr->message);
 		g_error_free(gerr);
 	}
-	g_strfreev(argv);
+	if(strcmp(cmd,cmdd))
+		g_strfreev(argv);
 	return ret;
 }
 

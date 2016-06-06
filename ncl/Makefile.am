@@ -1,6 +1,6 @@
 AM_CPPFLAGS = @gio_CFLAGS@ -I$(top_builddir)/lib -I$(top_srcdir)/lib
 
-noinst_PROGRAMS=ncl
+libexec_PROGRAMS = ncl
 
 ncl_SOURCES = \
 	$(srcdir)/ncl.c $(srcdir)/ncl.h \

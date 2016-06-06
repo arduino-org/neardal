@@ -309,6 +309,8 @@ static gboolean wait_lost (gpointer data)
 			keystroke_state=1;//
 			return TRUE;
 		}
+		//shikha patch to call neardal_destroy
+		neardal_destroy();
 		g_main_loop_quit( (GMainLoop*)data );
 		return FALSE;
 	}
